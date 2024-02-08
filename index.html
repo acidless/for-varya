@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I love you</title>
+    <script type="text/javascript" src="https://unpkg.com/real-turtle"></script>
+</head>
+<body>
+<canvas id="real-turtle"></canvas>
+<script type="text/javascript" src="https://unpkg.com/real-turtle/build/helpers/simple.js"></script>
+<script>
+    const colors = ["#FF0000", "#FF69B4", "#FF1493", "#FF00FF", "#DA70D6"];
+
+    function drawHeart(x, y, size) {
+        const color = colors[randomNumber(0, colors.length)];
+
+        turtle.penUp();
+        turtle.resetPosition();
+        turtle.setPosition(x, y);
+        turtle.beginPath();
+        turtle.penDown();
+        turtle.setStrokeStyle(color);
+        turtle.setFillStyle(color);
+        turtle.setLineWidth(3);
+        turtle.left(50);
+        turtle.forward(104 * size / 100);
+        turtle.arc(50 * size / 100, 210);
+        turtle.right(220);
+        turtle.arc(50 * size / 100, 210);
+        turtle.forward(104 * size / 100);
+        turtle.fill();
+        turtle.closePath();
+    }
+
+    function randomNumber(min, max) {
+        return Math.floor(Math.random() * (max - min) + min);
+    }
+
+
+    const canvas = document.querySelector("#real-turtle");
+
+    setInterval(async () => {
+        const size = randomNumber(50, 200);
+        const bounds = 104 * size / 100 + 50 * size / 100;
+
+        const x = randomNumber(bounds, canvas.clientWidth - bounds);
+        const y = randomNumber(bounds, canvas.clientHeight - bounds);
+        drawHeart(x, y, size);
+    }, 500);
+
+</script>
+</body>
+</html>
