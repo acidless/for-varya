@@ -90,11 +90,11 @@ function randomNumber(min, max) {
 const canvas = document.querySelector("#real-turtle");
 turtle.setSize(0);
 
-function onStart() {
+async function onStart() {
     audio.load();
     audio.volume = 0.25;
-    audio.currentTime = 125;//63.5;
-    audio.play();
+    audio.currentTime = 63.5;
+    await audio.play();
 
     const player = document.querySelector(".player");
     player.style.bottom = "50px";
@@ -141,7 +141,7 @@ const timings = {
     840: () => drawText("Ты самая желанная"),
     865: () => drawText("Ты самая любимая"),
     885: () => drawText("Ты солнце прекрасное"),
-    910: () => drawText("Улбайся почаще"),
+    910: () => drawText("Улыбайся почаще"),
     930: () => drawText("Будто солнце наше"),
     955: () => drawText("А ты с каждым разом краше"),
     975: () => drawText("И ты та, кто ночь уложит"),
@@ -161,7 +161,12 @@ const timings = {
 
 function drawText(text) {
     const container = document.querySelector(".text-container");
-    container.removeChild(container.querySelector(".text"));
+    const textNode = container.querySelector(".text");
+    if(textNode.textContent === text){
+        return;
+    }
+
+    container.removeChild(textNode);
 
     const node = document.createElement("p");
     node.classList.add('text');
