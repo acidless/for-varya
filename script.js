@@ -15,12 +15,13 @@ const confettiCanvas = document.querySelector('.confetti-canvas');
 const jsConfetti = new JSConfetti({canvas: confettiCanvas})
 
 const audio = new Audio("./assets/audio.mp3");
-audio.addEventListener("timeupdate", (event) => {
+const interval = setInterval(()=>{
     if (Math.round(audio.currentTime * 10) === 717) {
         jsConfetti.addConfetti({
             emojis: ['💘', '💖', '🩷', '💗', '💓', '💞'],
         });
         jsConfetti.addConfetti({confettiNumber: 500});
+        clearInterval(interval);
     }
 });
 
