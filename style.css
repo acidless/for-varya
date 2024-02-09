@@ -96,13 +96,17 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    background: #131213;
-    border-radius: 5px;
     transform: translate(-50%, -50%);
     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .text-container .text {
+    display: inline-block;
+    background: #131213;
+    border-radius: 5px;
     text-align: center;
     font-weight: 700;
     text-transform: uppercase;
