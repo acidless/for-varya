@@ -2,6 +2,10 @@ const MIN_SIZE = 50;
 const MAX_SIZE = 200;
 const START_TIME = 63.5;
 
+let isPlaying = false;
+let started = false;
+let drawHearts = false;
+
 window.addEventListener("resize", onWindowResize);
 onWindowResize();
 
@@ -26,8 +30,7 @@ setInterval(() => {
     }
 });
 
-let isPlaying = false;
-let started = false;
+
 const btn = document.querySelector(".player__toggle");
 btn.style.opacity = 1;
 btn.addEventListener("click", (e) => {
@@ -35,13 +38,15 @@ btn.addEventListener("click", (e) => {
     if (isPlaying) {
         btn.querySelector("img").src = "./assets/play.svg";
         audio.pause();
+        drawHearts = false;
     } else {
         btn.querySelector("img").src = "./assets/pause.svg";
         audio.play();
+        drawHearts = true;
 
         if (audio.currentTime === 0) {
-            played = [];
-            audio.currentTime = START_TIME;
+            started = true;
+            onStart();
         }
 
         if (!started) {
@@ -55,6 +60,7 @@ btn.addEventListener("click", (e) => {
 audio.addEventListener("ended", (e) => {
     btn.querySelector("img").src = "./assets/play.svg";
     isPlaying = false;
+    drawHearts = false;
 })
 
 
@@ -64,26 +70,26 @@ function map(val, prevMin, prevMax, newMin, newMax) {
     return newMin + ((newMax - newMin) / (prevMax - prevMin)) * (val - prevMin);
 }
 
-function drawHeart(x, y, angle, size) {
+async function drawHeart(x, y, angle, size) {
     const color = colors[randomNumber(0, colors.length)];
 
-    turtle.penUp();
-    turtle.resetPosition();
-    turtle.setPosition(x, y);
-    turtle.setSpeed(map(size, MIN_SIZE, MAX_SIZE, 0.5, 0.7));
-    turtle.left(angle);
-    turtle.beginPath();
-    turtle.penDown();
-    turtle.setStrokeStyle(color);
-    turtle.setFillStyle(color);
-    turtle.setLineWidth(3);
-    turtle.left(50);
-    turtle.forward(104 * size / 100);
-    turtle.arc(50 * size / 100, 210);
-    turtle.left(140);
-    turtle.arc(50 * size / 100, 210);
-    turtle.forward(104 * size / 100);
-    turtle.closePath();
+    await turtle.penUp();
+    await turtle.resetPosition();
+    await turtle.setPosition(x, y);
+    await turtle.setSpeed(map(size, MIN_SIZE, MAX_SIZE, 0.5, 0.7));
+    await turtle.left(angle);
+    await turtle.beginPath();
+    await turtle.penDown();
+    await turtle.setStrokeStyle(color);
+    await turtle.setFillStyle(color);
+    await turtle.setLineWidth(3);
+    await turtle.left(50);
+    await turtle.forward(104 * size / 100);
+    await turtle.arc(50 * size / 100, 210);
+    await turtle.left(140);
+    await turtle.arc(50 * size / 100, 210);
+    await turtle.forward(104 * size / 100);
+    await turtle.closePath();
 }
 
 function randomNumber(min, max) {
@@ -92,10 +98,13 @@ function randomNumber(min, max) {
 
 
 const canvas = document.querySelector("#real-turtle");
+turtle.options.async = true;
 turtle.setSize(0);
 
 async function onStart() {
-    audio.load();
+    played = [];
+    await turtle.clear();
+
     audio.volume = 0.25;
     audio.currentTime = START_TIME;
     await audio.play();
@@ -103,25 +112,34 @@ async function onStart() {
     const player = document.querySelector(".player");
     player.style.bottom = "50px";
     player.style.transform = "translateX(-50%)";
+
+    drawHearts = true;
+    drawing();
 }
 
-setInterval(drawing, 500);
 
-function drawing() {
-    const size = randomNumber(25, 50);
+async function drawing() {
+    while (true) {
+        if (drawHearts) {
+            const size = randomNumber(25, 50);
 
-    const boundsX = 50 * size / 100 * 2;
-    const boundsY = 104 * size / 100 + 50 * size / 100;
+            const boundsX = 50 * size / 100 * 2;
+            const boundsY = 104 * size / 100 + 50 * size / 100;
 
 
-    const x = randomNumber(boundsX / 2, canvas.clientWidth - boundsX / 2);
-    const y = randomNumber(boundsY, canvas.clientHeight - boundsY);
-    const angle = randomNumber(-30, 30);
+            const x = randomNumber(boundsX / 2, canvas.clientWidth - boundsX / 2);
+            const y = randomNumber(boundsY, canvas.clientHeight - boundsY);
+            const angle = randomNumber(-30, 30);
 
-    drawHeart(x, y, angle, size);
+            await drawHeart(x, y, angle, size);
+            await new Promise((res) => setTimeout(() => res(), 500));
+        } else {
+            await new Promise((res) => setTimeout(() => res(), 200));
+        }
+    }
 }
 
-function confetti(){
+function confetti() {
     jsConfetti.addConfetti({
         emojis: ['💘', '💝', '💓', '💖', '💕', '💗', '❤'],
     });
