@@ -15,11 +15,14 @@ function onWindowResize() {
 const confettiCanvas = document.querySelector('.confetti-canvas');
 const jsConfetti = new JSConfetti({canvas: confettiCanvas})
 
+let played = [];
 const audio = new Audio("./assets/audio.mp3");
-const interval = setInterval(() => {
-    const func = timings[Math.round(audio.currentTime * 10)];
-    if (func) {
-        func();
+setInterval(() => {
+    const time = Math.round(audio.currentTime * 10);
+    const funcData = timings[time];
+    if (funcData && (!funcData[1] || (funcData[1] && !played.includes(time)))) {
+        funcData[0]();
+        played.push(time);
     }
 });
 
@@ -36,7 +39,8 @@ btn.addEventListener("click", (e) => {
         btn.querySelector("img").src = "./assets/pause.svg";
         audio.play();
 
-        if(audio.currentTime === 0){
+        if (audio.currentTime === 0) {
+            played = [];
             audio.currentTime = START_TIME;
         }
 
@@ -48,7 +52,7 @@ btn.addEventListener("click", (e) => {
 
     isPlaying = !isPlaying;
 });
-audio.addEventListener("ended", (e)=>{
+audio.addEventListener("ended", (e) => {
     btn.querySelector("img").src = "./assets/play.svg";
     isPlaying = false;
 })
@@ -93,7 +97,7 @@ turtle.setSize(0);
 async function onStart() {
     audio.load();
     audio.volume = 0.25;
-    audio.currentTime = 63.5;
+    audio.currentTime = START_TIME;
     await audio.play();
 
     const player = document.querySelector(".player");
@@ -104,8 +108,7 @@ async function onStart() {
 setInterval(drawing, 500);
 
 function drawing() {
-    const windoProportions = document.body.clientWidth / 100 * document.body.clientHeight / 100;
-    const size = randomNumber(windoProportions / 4, windoProportions);
+    const size = randomNumber(25, 50);
 
     const boundsX = 50 * size / 100 * 2;
     const boundsY = 104 * size / 100 + 50 * size / 100;
@@ -118,51 +121,53 @@ function drawing() {
     drawHeart(x, y, angle, size);
 }
 
-isConfettiSpawned = false;
 const timings = {
-    635: () => drawText("Ты самая красивая"),
-    655: () => drawText("Ты самая желанная"),
-    680: () => drawText("Ты самая любимая"),
-    705: () => drawText("Ты солнце прекрасное"),
-    717: () => {
-        if(!isConfettiSpawned){
-            jsConfetti.addConfetti({
-                emojis: ['💘', '💖', '🩷', '💗', '💓', '💞'],
-            });
-            jsConfetti.addConfetti({confettiNumber: 1000});
-            isConfettiSpawned = true;
-        }
-    },
-    730: () => drawText("Ты самая красивая"),
-    750: () => drawText("Ты самая желанная"),
-    775: () => drawText("Ты самая любимая"),
-    795: () => drawText("Ты счастье долгожданное"),
-    820: () => drawText("Ты самая красивая"),
-    840: () => drawText("Ты самая желанная"),
-    865: () => drawText("Ты самая любимая"),
-    885: () => drawText("Ты солнце прекрасное"),
-    910: () => drawText("Улыбайся почаще"),
-    930: () => drawText("Будто солнце наше"),
-    955: () => drawText("А ты с каждым разом краше"),
-    975: () => drawText("И ты та, кто ночь уложит"),
-    1000: () => drawText("Ты самая прекрасная"),
-    1025: () => drawText("Сегодня солнце ясное, и ты"),
-    1065: () => drawText("Та, кем всегда хотела быть"),
-    1095: () => drawText("Запомни"),
-    1105: () => drawText("Ты самая красивая"),
-    1115: () => drawText("Ты самая желанная"),
-    1135: () => drawText("Ты самая любимая"),
-    1160: () => drawText("Ты счастье долгожданное"),
-    1185: () => drawText("Ты самая красивая"),
-    1205: () => drawText("Ты самая желанная"),
-    1230: () => drawText("Ты самая любимая"),
-    1250: () => drawText("Ты солнце прекрасное"),
+    635: [() => drawText("Ты самая красивая")],
+    655: [() => drawText("Ты самая желанная")],
+    680: [() => drawText("Ты самая любимая")],
+    705: [() => drawText("Ты солнце прекрасное")],
+    717: [() => {
+        jsConfetti.addConfetti({
+            emojis: ['💘', '💖', '🩷', '💗', '💓', '💞'],
+        });
+        jsConfetti.addConfetti({confettiNumber: 1000});
+    }, true],
+    730: [() => drawText("Ты самая красивая")],
+    750: [() => drawText("Ты самая желанная")],
+    775: [() => drawText("Ты самая любимая")],
+    795: [() => drawText("Ты счастье долгожданное")],
+    820: [() => drawText("Ты самая красивая")],
+    840: [() => drawText("Ты самая желанная")],
+    865: [() => drawText("Ты самая любимая")],
+    885: [() => drawText("Ты солнце прекрасное")],
+    910: [() => drawText("Улыбайся почаще")],
+    930: [() => drawText("Будто солнце наше")],
+    955: [() => drawText("А ты с каждым разом краше")],
+    975: [() => drawText("И ты та, кто ночь уложит")],
+    1000: [() => drawText("Ты самая прекрасная")],
+    1025: [() => drawText("Сегодня солнце ясное, и ты")],
+    1065: [() => drawText("Та, кем всегда хотела быть")],
+    1095: [() => drawText("Запомни")],
+    1105: [() => drawText("Ты самая красивая")],
+    1115: [() => drawText("Ты самая желанная")],
+    1135: [() => drawText("Ты самая любимая")],
+    1160: [() => drawText("Ты счастье долгожданное")],
+    1185: [() => drawText("Ты самая красивая")],
+    1205: [() => drawText("Ты самая желанная")],
+    1230: [() => drawText("Ты самая любимая")],
+    1250: [() => drawText("Ты солнце прекрасное")],
+    1265: [() => {
+        jsConfetti.addConfetti({
+            emojis: ['💘', '💖', '🩷', '💗', '💓', '💞'],
+        });
+        jsConfetti.addConfetti({confettiNumber: 1000});
+    }, true],
 }
 
 function drawText(text) {
     const container = document.querySelector(".text-container");
     const textNode = container.querySelector(".text");
-    if(textNode.textContent === text){
+    if (textNode.textContent === text) {
         return;
     }
 
