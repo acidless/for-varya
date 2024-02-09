@@ -81,7 +81,6 @@ async function drawHeart(x, y, angle, size) {
     await turtle.beginPath();
     await turtle.penDown();
     await turtle.setStrokeStyle(color);
-    await turtle.setFillStyle(color);
     await turtle.setLineWidth(3);
     await turtle.left(50);
     await turtle.forward(104 * size / 100);
@@ -117,26 +116,47 @@ async function onStart() {
     drawing();
 }
 
+const hearts = [];
 
 async function drawing() {
     while (true) {
         if (drawHearts) {
             const size = randomNumber(25, 50);
 
-            const boundsX = 50 * size / 100 * 2;
-            const boundsY = 104 * size / 100 + 50 * size / 100;
+            const boundsX = size * 2;
+            const boundsY = size * 1.6;
 
+            while (true) {
+                let isValidPosition = true;
+                const x = randomNumber(boundsX / 2, canvas.clientWidth - boundsX / 2);
+                const y = randomNumber(boundsY, canvas.clientHeight - boundsY);
 
-            const x = randomNumber(boundsX / 2, canvas.clientWidth - boundsX / 2);
-            const y = randomNumber(boundsY, canvas.clientHeight - boundsY);
-            const angle = randomNumber(-30, 30);
+                const angle = randomNumber(-30, 30);
 
-            await drawHeart(x, y, angle, size);
-            await new Promise((res) => setTimeout(() => res(), 500));
+                hearts.forEach((heart) => {
+                    if (!(x - boundsX / 2 > heart[1] || x + boundsX / 2 < heart[0] || y < heart[2] || y - boundsY > heart[3])) {
+                        isValidPosition = false;
+                        return;
+                    }
+                })
+
+                if (isValidPosition) {
+                    await drawHeart(x, y, angle, size);
+                    hearts.push([x - boundsX / 2, x + boundsX / 2, y - boundsY, y]);
+                    await wait(500);
+                } else {
+                    await wait(50);
+                }
+
+            }
         } else {
-            await new Promise((res) => setTimeout(() => res(), 200));
+            await wait(200);
         }
     }
+}
+
+function wait(ms) {
+    return new Promise((res) => setTimeout(() => res(), ms));
 }
 
 function confetti() {
