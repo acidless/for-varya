@@ -101,6 +101,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    animation: squiggly-anim 0.34s linear infinite;
 }
 
 .text-container .text {
@@ -116,6 +117,10 @@ body {
     font-size: 32px;
 }
 
+.text-container .text.increase-animation {
+    animation: Increase 0.5s forwards ease-in-out;
+}
+
 @keyframes SlideIn {
     0% {
         opacity: 0;
@@ -129,7 +134,37 @@ body {
         transform-origin: bottom center;
         transform: translate(0, 0) rotateZ(0);
     }
+}
 
+@keyframes squiggly-anim {
+    0% {
+        filter: url('#squiggly-0');
+    }
+
+    25% {
+        filter: url('#squiggly-1');
+    }
+
+    50% {
+        filter: url('#squiggly-2');
+    }
+
+    75% {
+        filter: url('#squiggly-3');
+    }
+
+    100% {
+        filter: url('#squiggly-4');
+    }
+}
+
+@keyframes Increase {
+    0% {
+        scale: 1;
+    }
+    100% {
+        scale: 1.25;
+    }
 }
 
 @media screen and (max-width: 768px) {
@@ -152,7 +187,7 @@ body {
         height: 40px;
     }
 
-    .text-container .text{
+    .text-container .text {
         font-size: 24px;
     }
 }
@@ -162,7 +197,7 @@ body {
         width: 100%;
     }
 
-    .text-container .text{
+    .text-container .text {
         font-size: 20px;
     }
 }
@@ -172,7 +207,7 @@ body {
         width: 100%;
     }
 
-    .text-container .text{
+    .text-container .text {
         font-size: 16px;
     }
 }

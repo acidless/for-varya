@@ -179,7 +179,10 @@ const timings = {
     655: [() => drawText("Ты самая желанная")],
     680: [() => drawText("Ты самая любимая")],
     705: [() => drawText("Ты солнце прекрасное ✨")],
-    717: [confetti, true],
+    717: [() => {
+        confetti();
+        document.querySelector(".text-container .text").classList.add("increase-animation");
+    }, true],
     730: [() => drawText("Ты самая красивая")],
     750: [() => drawText("Ты самая желанная")],
     775: [() => drawText("Ты самая любимая")],
@@ -204,7 +207,10 @@ const timings = {
     1210: [() => drawText("Ты самая желанная")],
     1235: [() => drawText("Ты самая любимая")],
     1255: [() => drawText("Ты солнце прекрасное ✨")],
-    1270: [confetti, true],
+    1270: [() => {
+        confetti();
+        document.querySelector(".text-container .text").classList.add("increase-animation");
+    }, true],
 }
 
 function drawText(text) {
