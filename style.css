@@ -44,6 +44,11 @@ body {
     transition: all 2s ease-in-out;
 }
 
+.player.bottom {
+    bottom: 50px;
+    transform: translateX(-50%);
+}
+
 .player__cover, .player__cover img {
     height: 100%;
     width: auto;
@@ -199,6 +204,10 @@ body {
 
     .text-container .text {
         font-size: 20px;
+    }
+
+    .player.bottom {
+        bottom: 0;
     }
 }
 

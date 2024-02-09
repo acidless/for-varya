@@ -113,8 +113,7 @@ async function onStart() {
     await audio.play();
 
     const player = document.querySelector(".player");
-    player.style.bottom = "50px";
-    player.style.transform = "translateX(-50%)";
+    player.classList.add("bottom");
 
     drawHearts = true;
     drawing();
