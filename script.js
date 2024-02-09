@@ -25,18 +25,11 @@ const interval = setInterval(()=>{
     }
 });
 
-document.addEventListener("click", () => {
-    audio.load();
-    audio.volume = 0.25;
-    audio.currentTime = 63;
-    audio.play();
-}, {once: true});
-
-let isPlaying = true;
+let isPlaying = false;
+let started = false;
 const btn = document.querySelector(".player__toggle");
 btn.style.opacity = 1;
 btn.addEventListener("click", (e) => {
-    event.stopPropagation();
     btn.style = "";
     if (isPlaying) {
         btn.querySelector("img").src = "./assets/play.svg";
@@ -44,6 +37,11 @@ btn.addEventListener("click", (e) => {
     } else {
         btn.querySelector("img").src = "./assets/pause.svg";
         audio.play();
+
+        if(!started){
+            started = true;
+            onStart();
+        }
     }
 
     isPlaying = !isPlaying;
@@ -83,9 +81,24 @@ function randomNumber(min, max) {
 
 
 const canvas = document.querySelector("#real-turtle");
+canvas.style.opacity = "0";
 turtle.setSize(0);
 
-setInterval(async () => {
+function onStart(){
+    audio.load();
+    audio.volume = 0.25;
+    audio.currentTime = 63;
+    audio.play();
+
+    const player = document.querySelector(".player");
+    player.style.bottom = "50px";
+    player.style.transform = "translateX(-50%)";
+    canvas.style.opacity = "1";
+    canvas.getContext("2d").clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+}
+
+setInterval(drawing, 500);
+function drawing(){
     const windoProportions = document.body.clientWidth / 100 * document.body.clientHeight / 100;
     const size = randomNumber(windoProportions / 4, windoProportions);
 
@@ -99,4 +112,7 @@ setInterval(async () => {
     const angle = randomNumber(-30, 30);
 
     drawHeart(x, y, angle, size);
-}, 500);
+}
+
+
+
