@@ -15,7 +15,7 @@ const confettiCanvas = document.querySelector('.confetti-canvas');
 const jsConfetti = new JSConfetti({canvas: confettiCanvas})
 
 const audio = new Audio("./assets/audio.mp3");
-const interval = setInterval(()=>{
+const interval = setInterval(() => {
     if (Math.round(audio.currentTime * 10) === 717) {
         jsConfetti.addConfetti({
             emojis: ['💘', '💖', '🩷', '💗', '💓', '💞'],
@@ -38,7 +38,7 @@ btn.addEventListener("click", (e) => {
         btn.querySelector("img").src = "./assets/pause.svg";
         audio.play();
 
-        if(!started){
+        if (!started) {
             started = true;
             onStart();
         }
@@ -81,10 +81,9 @@ function randomNumber(min, max) {
 
 
 const canvas = document.querySelector("#real-turtle");
-canvas.style.opacity = "0";
 turtle.setSize(0);
 
-function onStart(){
+function onStart() {
     audio.load();
     audio.volume = 0.25;
     audio.currentTime = 63;
@@ -93,15 +92,13 @@ function onStart(){
     const player = document.querySelector(".player");
     player.style.bottom = "50px";
     player.style.transform = "translateX(-50%)";
-    canvas.style.opacity = "1";
-    canvas.getContext("2d").clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
 }
 
 setInterval(drawing, 500);
-function drawing(){
+
+function drawing() {
     const windoProportions = document.body.clientWidth / 100 * document.body.clientHeight / 100;
     const size = randomNumber(windoProportions / 4, windoProportions);
-
 
     const boundsX = 50 * size / 100 * 2;
     const boundsY = 104 * size / 100 + 50 * size / 100;
@@ -111,8 +108,10 @@ function drawing(){
     const y = randomNumber(boundsY, canvas.clientHeight - boundsY);
     const angle = randomNumber(-30, 30);
 
-    drawHeart(x, y, angle, size);
+    if (started)
+        drawHeart(x, y, angle, size);
 }
+
 
 
 
