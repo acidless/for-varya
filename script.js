@@ -121,17 +121,19 @@ function drawing() {
     drawHeart(x, y, angle, size);
 }
 
+function confetti(){
+    jsConfetti.addConfetti({
+        emojis: ['💘', '💝', '💓', '💖', '💕', '💗', '❤'],
+    });
+    jsConfetti.addConfetti({confettiNumber: 1000});
+}
+
 const timings = {
     635: [() => drawText("Ты самая красивая")],
     655: [() => drawText("Ты самая желанная")],
     680: [() => drawText("Ты самая любимая")],
     705: [() => drawText("Ты солнце прекрасное")],
-    717: [() => {
-        jsConfetti.addConfetti({
-            emojis: ['💘', '💖', '🩷', '💗', '💓', '💞'],
-        });
-        jsConfetti.addConfetti({confettiNumber: 1000});
-    }, true],
+    717: [confetti, true],
     730: [() => drawText("Ты самая красивая")],
     750: [() => drawText("Ты самая желанная")],
     775: [() => drawText("Ты самая любимая")],
@@ -156,12 +158,7 @@ const timings = {
     1205: [() => drawText("Ты самая желанная")],
     1230: [() => drawText("Ты самая любимая")],
     1250: [() => drawText("Ты солнце прекрасное")],
-    1265: [() => {
-        jsConfetti.addConfetti({
-            emojis: ['💘', '💖', '🩷', '💗', '💓', '💞'],
-        });
-        jsConfetti.addConfetti({confettiNumber: 1000});
-    }, true],
+    1265: [confetti, true],
 }
 
 function drawText(text) {
