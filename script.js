@@ -84,7 +84,7 @@ turtle.setSize(0);
 function onStart() {
     audio.load();
     audio.volume = 0.25;
-    audio.currentTime = 63;
+    audio.currentTime = 63.5;
     audio.play();
 
     const player = document.querySelector(".player");
@@ -111,7 +111,7 @@ function drawing() {
 
 isConfettiSpawned = false;
 const timings = {
-    630: () => drawText("Ты самая красивая"),
+    635: () => drawText("Ты самая красивая"),
     655: () => drawText("Ты самая желанная"),
     680: () => drawText("Ты самая любимая"),
     705: () => drawText("Ты солнце прекрасное"),
