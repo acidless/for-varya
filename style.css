@@ -112,20 +112,22 @@ body {
     text-transform: uppercase;
     padding: 10px;
     transform-origin: bottom center;
-    animation: SlideIn 0.5s forwards ease-in-out;
+    animation: SlideIn 1.25s forwards ease-in-out;
     font-size: 32px;
 }
 
 @keyframes SlideIn {
     0% {
+        opacity: 0;
         scale: 0;
         transform-origin: bottom center;
-        transform: translateY(-50%);
+        transform: translate(-100%, -50%) rotateZ(-180deg);
     }
     100% {
         scale: 1;
+        opacity: 1;
         transform-origin: bottom center;
-        transform: translateY(0%);
+        transform: translate(0, 0) rotateZ(0);
     }
 
 }

@@ -131,24 +131,28 @@ async function drawing() {
             const boundsY = size * 1.6;
 
             while (true) {
-                let isValidPosition = true;
-                const x = randomNumber(boundsX / 2, canvas.clientWidth - boundsX / 2);
-                const y = randomNumber(boundsY, canvas.clientHeight - boundsY);
+                try {
+                    let isValidPosition = true;
+                    const x = randomNumber(boundsX / 2, canvas.clientWidth - boundsX / 2);
+                    const y = randomNumber(boundsY, canvas.clientHeight - boundsY);
 
-                const angle = randomNumber(-30, 30);
+                    const angle = randomNumber(-30, 30);
 
-                hearts.forEach((heart) => {
-                    if (!(x - boundsX / 2 > heart[1] || x + boundsX / 2 < heart[0] || y < heart[2] || y - boundsY > heart[3])) {
-                        isValidPosition = false;
-                        return;
+                    hearts.forEach((heart) => {
+                        if (!(x - boundsX / 2 > heart[1] || x + boundsX / 2 < heart[0] || y < heart[2] || y - boundsY > heart[3])) {
+                            isValidPosition = false;
+                        }
+                    })
+
+                    if (isValidPosition) {
+                        await drawHeart(x, y, angle, size);
+                        hearts.push([x - boundsX / 2, x + boundsX / 2, y - boundsY, y]);
+                        await wait(500);
+                        break;
+                    } else {
+                        await wait(50);
                     }
-                })
-
-                if (isValidPosition) {
-                    await drawHeart(x, y, angle, size);
-                    hearts.push([x - boundsX / 2, x + boundsX / 2, y - boundsY, y]);
-                    await wait(500);
-                } else {
+                } catch (e) {
                     await wait(50);
                 }
 
@@ -171,10 +175,10 @@ function confetti() {
 }
 
 const timings = {
-    635: [() => drawText("Ты самая красивая")],
+    635: [() => drawText("Ты самая красивая 💘")],
     655: [() => drawText("Ты самая желанная")],
     680: [() => drawText("Ты самая любимая")],
-    705: [() => drawText("Ты солнце прекрасное")],
+    705: [() => drawText("Ты солнце прекрасное ✨")],
     717: [confetti, true],
     730: [() => drawText("Ты самая красивая")],
     750: [() => drawText("Ты самая желанная")],
@@ -183,24 +187,24 @@ const timings = {
     820: [() => drawText("Ты самая красивая")],
     840: [() => drawText("Ты самая желанная")],
     865: [() => drawText("Ты самая любимая")],
-    885: [() => drawText("Ты солнце прекрасное")],
+    885: [() => drawText("Ты солнце прекрасное ✨")],
     910: [() => drawText("Улыбайся почаще")],
     930: [() => drawText("Будто солнце наше")],
     955: [() => drawText("А ты с каждым разом краше")],
     975: [() => drawText("И ты та, кто ночь уложит")],
-    1000: [() => drawText("Ты самая прекрасная")],
+    1000: [() => drawText("Ты самая прекрасная ✨")],
     1025: [() => drawText("Сегодня солнце ясное, и ты")],
     1065: [() => drawText("Та, кем всегда хотела быть")],
-    1095: [() => drawText("Запомни")],
+    1090: [() => drawText("Запомни")],
     1105: [() => drawText("Ты самая красивая")],
-    1115: [() => drawText("Ты самая желанная")],
-    1135: [() => drawText("Ты самая любимая")],
-    1160: [() => drawText("Ты счастье долгожданное")],
-    1185: [() => drawText("Ты самая красивая")],
-    1205: [() => drawText("Ты самая желанная")],
-    1230: [() => drawText("Ты самая любимая")],
-    1250: [() => drawText("Ты солнце прекрасное")],
-    1265: [confetti, true],
+    1120: [() => drawText("Ты самая желанная")],
+    1140: [() => drawText("Ты самая любимая")],
+    1165: [() => drawText("Ты счастье долгожданное")],
+    1190: [() => drawText("Ты самая красивая")],
+    1210: [() => drawText("Ты самая желанная")],
+    1235: [() => drawText("Ты самая любимая")],
+    1255: [() => drawText("Ты солнце прекрасное ✨")],
+    1270: [confetti, true],
 }
 
 function drawText(text) {
