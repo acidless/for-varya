@@ -1,5 +1,6 @@
 const MIN_SIZE = 50;
 const MAX_SIZE = 200;
+const START_TIME = 63.5;
 
 window.addEventListener("resize", onWindowResize);
 onWindowResize();
@@ -16,7 +17,6 @@ const jsConfetti = new JSConfetti({canvas: confettiCanvas})
 
 const audio = new Audio("./assets/audio.mp3");
 const interval = setInterval(() => {
-    console.log(Math.round(audio.currentTime * 10));
     const func = timings[Math.round(audio.currentTime * 10)];
     if (func) {
         func();
@@ -36,6 +36,10 @@ btn.addEventListener("click", (e) => {
         btn.querySelector("img").src = "./assets/pause.svg";
         audio.play();
 
+        if(audio.currentTime === 0){
+            audio.currentTime = START_TIME;
+        }
+
         if (!started) {
             started = true;
             onStart();
@@ -44,6 +48,11 @@ btn.addEventListener("click", (e) => {
 
     isPlaying = !isPlaying;
 });
+audio.addEventListener("ended", (e)=>{
+    btn.querySelector("img").src = "./assets/play.svg";
+    isPlaying = false;
+})
+
 
 const colors = ["#FF0000", "#FF69B4", "#FF1493", "#FF00FF", "#DA70D6"];
 
@@ -84,7 +93,7 @@ turtle.setSize(0);
 function onStart() {
     audio.load();
     audio.volume = 0.25;
-    audio.currentTime = 63.5;
+    audio.currentTime = 125;//63.5;
     audio.play();
 
     const player = document.querySelector(".player");

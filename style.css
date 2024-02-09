@@ -113,6 +113,7 @@ body {
     padding: 10px;
     transform-origin: bottom center;
     animation: SlideIn 0.5s forwards ease-in-out;
+    font-size: 32px;
 }
 
 @keyframes SlideIn {
@@ -148,10 +149,28 @@ body {
         width: 40px;
         height: 40px;
     }
+
+    .text-container .text{
+        font-size: 24px;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .player {
+        width: 100%;
+    }
+
+    .text-container .text{
+        font-size: 20px;
+    }
 }
 
 @media screen and (max-width: 350px) {
     .player {
         width: 100%;
+    }
+
+    .text-container .text{
+        font-size: 16px;
     }
 }
