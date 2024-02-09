@@ -16,12 +16,9 @@ const jsConfetti = new JSConfetti({canvas: confettiCanvas})
 
 const audio = new Audio("./assets/audio.mp3");
 const interval = setInterval(() => {
-    if (Math.round(audio.currentTime * 10) === 717) {
-        jsConfetti.addConfetti({
-            emojis: ['💘', '💖', '🩷', '💗', '💓', '💞'],
-        });
-        jsConfetti.addConfetti({confettiNumber: 500});
-        clearInterval(interval);
+    const func = timings[Math.round(audio.currentTime * 10)];
+    if (func) {
+        func();
     }
 });
 
@@ -108,10 +105,33 @@ function drawing() {
     const y = randomNumber(boundsY, canvas.clientHeight - boundsY);
     const angle = randomNumber(-30, 30);
 
-    if (started)
-        drawHeart(x, y, angle, size);
+    drawHeart(x, y, angle, size);
 }
 
+isConfettiSpawned = false;
+const timings = {
+    630: () => drawText("Ты самая красивая"),
+    650: () => drawText("Ты самая желанная"),
+    717: () => {
+        if(!isConfettiSpawned){
+            jsConfetti.addConfetti({
+                emojis: ['💘', '💖', '🩷', '💗', '💓', '💞'],
+            });
+            jsConfetti.addConfetti({confettiNumber: 1000});
+            isConfettiSpawned = true;
+        }
+    },
+}
+
+function drawText(text) {
+    const container = document.querySelector(".text-container");
+    container.removeChild(container.querySelector(".text"));
+
+    const node = document.createElement("p");
+    node.classList.add('text');
+    node.textContent = text;
+    container.appendChild(node);
+}
 
 
 

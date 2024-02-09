@@ -32,8 +32,8 @@ body {
 
 .player {
     position: absolute;
-    bottom:50%;
     width: 500px;
+    bottom: 50%;
     height: 133px;
     background: black;
     left: 50%;
@@ -50,21 +50,21 @@ body {
     position: relative;
 }
 
-.player__cover button{
+.player__cover button {
     width: 60px;
     height: 60px;
     background: none;
     border: none;
     cursor: pointer;
     position: absolute;
-    top:50%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
 }
 
-.player__cover:hover button{
+.player__cover:hover button {
     opacity: 1;
 }
 
@@ -72,7 +72,7 @@ body {
     flex: 1;
 }
 
-.player__icons{
+.player__icons {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -92,22 +92,53 @@ body {
     height: 100%;
 }
 
-@media screen and (max-width: 768px){
-    .player{
+.text-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: #131213;
+    border-radius: 5px;
+    transform: translate(-50%, -50%);
+}
+
+.text-container .text {
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 10px;
+    transform-origin: bottom center;
+    animation: SlideIn 0.5s forwards ease-in-out;
+}
+
+@keyframes SlideIn {
+    0% {
+        scale: 0;
+        transform-origin: bottom center;
+        transform: translateY(-50%);
+    }
+    100% {
+        scale: 1;
+        transform-origin: bottom center;
+        transform: translateY(0%);
+    }
+
+}
+
+@media screen and (max-width: 768px) {
+    .player {
         width: 300px;
         height: 80px;
     }
 
-    h1, p{
+    h1, p {
         font-size: 14px;
     }
 
-    .icon{
+    .icon {
         width: 18px;
         height: 18px;
     }
 
-    .player__cover button{
+    .player__cover button {
         width: 40px;
         height: 40px;
     }
