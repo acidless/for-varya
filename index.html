@@ -5,50 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>I love you</title>
     <script type="text/javascript" src="https://unpkg.com/real-turtle"></script>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital@0;1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,700;1,700&display=swap"
+          rel="stylesheet">
 </head>
 <body>
 <canvas id="real-turtle"></canvas>
+<canvas id="confetti-canvas"></canvas>
+<div class="player">
+    <div class="player__cover">
+        <img src="./assets/cover.jpg" alt="Cover">
+        <button class="player__toggle">
+            <img src="./assets/pause.svg" alt="">
+        </button>
+    </div>
+    <div class="player__data">
+        <h1>Самая (Speed Up)</h1>
+        <p>Mada</p>
+    </div>
+    <div class="player__icons">
+        <div class="icon">
+            <img src="./assets/spotify.svg" alt="">
+        </div>
+        <div class="icon">
+            <img src="./assets/share.svg" alt="">
+        </div>
+    </div>
+</div>
 <script type="text/javascript" src="https://unpkg.com/real-turtle/build/helpers/simple.js"></script>
-<script>
-    const colors = ["#FF0000", "#FF69B4", "#FF1493", "#FF00FF", "#DA70D6"];
-
-    function drawHeart(x, y, size) {
-        const color = colors[randomNumber(0, colors.length)];
-
-        turtle.penUp();
-        turtle.resetPosition();
-        turtle.setPosition(x, y);
-        turtle.beginPath();
-        turtle.penDown();
-        turtle.setStrokeStyle(color);
-        turtle.setFillStyle(color);
-        turtle.setLineWidth(3);
-        turtle.left(50);
-        turtle.forward(104 * size / 100);
-        turtle.arc(50 * size / 100, 210);
-        turtle.right(220);
-        turtle.arc(50 * size / 100, 210);
-        turtle.forward(104 * size / 100);
-        turtle.fill();
-        turtle.closePath();
-    }
-
-    function randomNumber(min, max) {
-        return Math.floor(Math.random() * (max - min) + min);
-    }
-
-
-    const canvas = document.querySelector("#real-turtle");
-
-    setInterval(async () => {
-        const size = randomNumber(50, 200);
-        const bounds = 104 * size / 100 + 50 * size / 100;
-
-        const x = randomNumber(bounds, canvas.clientWidth - bounds);
-        const y = randomNumber(bounds, canvas.clientHeight - bounds);
-        drawHeart(x, y, size);
-    }, 500);
-
-</script>
+<script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+<script src="./script.js"></script>
 </body>
 </html>
