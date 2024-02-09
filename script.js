@@ -102,7 +102,11 @@ turtle.setSize(0);
 
 async function onStart() {
     played = [];
-    await turtle.clear();
+    try {
+        await turtle.clear();
+    } catch (e) {
+
+    }
 
     audio.volume = 0.25;
     audio.currentTime = START_TIME;
