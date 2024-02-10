@@ -1,6 +1,11 @@
 const MIN_SIZE = 50;
 const MAX_SIZE = 200;
 const START_TIME = 63.5;
+const MEET_DATE = new Date(2023, 5, 11, 16, 37);
+
+let diffInTime = Date.now() - MEET_DATE.getTime();
+let diffInDays = Math.floor(diffInTime / (1000 * 3600 * 24));
+document.querySelector(".meet-days").textContent = diffInDays;
 
 let isPlaying = false;
 let started = false;
@@ -180,7 +185,7 @@ const timings = {
     705: [() => drawText("Ты солнце прекрасное ✨")],
     717: [() => {
         confetti();
-        document.querySelector(".text-container .text").classList.add("increase-animation");
+        document.querySelector(".text-container div").classList.add("increase-animation");
     }, true],
     730: [() => drawText("Ты самая красивая")],
     750: [() => drawText("Ты самая желанная")],
@@ -208,24 +213,41 @@ const timings = {
     1255: [() => drawText("Ты солнце прекрасное ✨")],
     1270: [() => {
         confetti();
-        document.querySelector(".text-container .text").classList.add("increase-animation");
+        document.querySelector(".text-container div").classList.add("increase-animation");
     }, true],
 }
 
 function drawText(text) {
     const container = document.querySelector(".text-container");
+    const textNodeWrapper = container.querySelector("div");
     const textNode = container.querySelector(".text");
     if (textNode.textContent === text) {
         return;
     }
+    container.removeChild(textNodeWrapper);
 
-    container.removeChild(textNode);
-
+    const nodeParent = document.createElement("div");
     const node = document.createElement("p");
     node.classList.add('text');
     node.textContent = text;
-    container.appendChild(node);
+    nodeParent.appendChild(node)
+    container.appendChild(nodeParent);
 }
+
+var modals = document.querySelectorAll(".modal");
+document.querySelectorAll(".modal-btn").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+        document.getElementById(btn.getAttribute("data-modal")).classList.add("active");
+    })
+})
+
+window.addEventListener("click", (event) => {
+    modals.forEach(modal => {
+        if (event.target == modal) {
+            modal.classList.remove("active");
+        }
+    });
+})
 
 
 

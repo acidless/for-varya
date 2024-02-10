@@ -16,30 +16,30 @@
 <canvas id="real-turtle"></canvas>
 <canvas id="confetti-canvas"></canvas>
 <div class="text-container">
-    <p class="text"></p>
+    <div><p class="text"></p></div>
     <svg style="display: none;" xmlns="http://www.w3.org/2000/svg" version="1.1">
         <defs>
             <filter id="squiggly-0">
                 <feTurbulence id="turbulence" baseFrequency="0.02" numOctaves="3" result="noise" seed="0"/>
-                <feDisplacementMap id="displacement" in="SourceGraphic" in2="noise" scale="6" />
+                <feDisplacementMap id="displacement" in="SourceGraphic" in2="noise" scale="6"/>
             </filter>
             <filter id="squiggly-1">
                 <feTurbulence id="turbulence" baseFrequency="0.02" numOctaves="3" result="noise" seed="1"/>
-                <feDisplacementMap in="SourceGraphic" in2="noise" scale="8" />
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="8"/>
             </filter>
 
             <filter id="squiggly-2">
                 <feTurbulence id="turbulence" baseFrequency="0.02" numOctaves="3" result="noise" seed="2"/>
-                <feDisplacementMap in="SourceGraphic" in2="noise" scale="6" />
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="6"/>
             </filter>
             <filter id="squiggly-3">
                 <feTurbulence id="turbulence" baseFrequency="0.02" numOctaves="3" result="noise" seed="3"/>
-                <feDisplacementMap in="SourceGraphic" in2="noise" scale="8" />
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="8"/>
             </filter>
 
             <filter id="squiggly-4">
                 <feTurbulence id="turbulence" baseFrequency="0.02" numOctaves="3" result="noise" seed="4"/>
-                <feDisplacementMap in="SourceGraphic" in2="noise" scale="6" />
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="6"/>
             </filter>
         </defs>
     </svg>
@@ -47,7 +47,7 @@
 <div class="player">
     <div class="player__cover">
         <img src="./assets/cover.jpg" alt="Cover">
-        <button class="player__toggle">
+        <button class="player__toggle transparent-btn">
             <img src="./assets/play.svg" alt="">
         </button>
     </div>
@@ -57,10 +57,27 @@
     </div>
     <div class="player__icons">
         <div class="icon">
-            <img src="./assets/spotify.svg" alt="">
+            <a href="https://music.yandex.ru/album/27119718/track/116752212" target="_blank"
+               class="transparent-btn icon-btn">
+                <img src="./assets/spotify.svg" alt="">
+            </a>
         </div>
         <div class="icon">
-            <img src="./assets/share.svg" alt="">
+            <button class="transparent-btn icon-btn modal-btn" data-modal="secret-modal">
+                <img src="./assets/share.svg" alt="">
+            </button>
+        </div>
+    </div>
+</div>
+<div id="secret-modal" class="modal meet-modal">
+    <div class="modal-content">
+        <p>Ооо ты нашла секретное окошко)</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae, nisi!</p>
+        <div class="modal__center">
+            <div>
+                <p class="meet-modal__text"><span class="meet-days"></span><span class="meet-modal__day">день</span></p>
+                <p class="meet-modal__small-text">с нашего знакомства</p>
+            </div>
         </div>
     </div>
 </div>
