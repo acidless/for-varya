@@ -211,6 +211,7 @@ button {
 }
 
 .modal-content {
+    pointer-events: none;
     position: absolute;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -254,6 +255,7 @@ button {
     -webkit-transform: translate(-50%, -50%) scale(1);
     -ms-transform: translate(-50%, -50%) scale(1);
     transform: translate(-50%, -50%) scale(1);
+    pointer-events: auto;
 }
 
 .modal__center {
