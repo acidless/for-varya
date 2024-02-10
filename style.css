@@ -492,7 +492,9 @@ button {
     .text-container .text {
         font-size: 20px;
     }
+}
 
+@media (max-width: 550px) or (max-height: 450px) {
     .player.bottom {
         bottom: 0;
     }
