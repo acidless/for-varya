@@ -158,7 +158,7 @@ async function onStart() {
 
 const MIN_SIZE = 50;
 const MAX_SIZE = 200;
-const START_TIME = 63.5;
+const START_TIME = 63.4;
 
 const canvas = document.querySelector("#real-turtle");
 turtle.options.async = true;
