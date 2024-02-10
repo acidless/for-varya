@@ -464,6 +464,7 @@ button {
 
     .modal-content {
         max-width: none;
+        min-width: auto;
         width: 100%;
         top: auto;
         bottom: 0;
