@@ -283,7 +283,7 @@ button {
     position: relative;
 }
 
-.meet-days::before {
+.meet-days::after {
     content: "*";
     position: absolute;
     top: 4px;
@@ -297,7 +297,7 @@ button {
     color: #585858;
 }
 
-.meet-days::after {
+.meet-days::before {
     content: "";
     position: absolute;
     bottom: 0;
