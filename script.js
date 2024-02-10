@@ -14,10 +14,9 @@ document.querySelectorAll(".modal-btn").forEach((btn) => {
     })
 })
 
-window.addEventListener("click", (event) => {
-    event.stopPropagation();
-    modals.forEach(modal => {
-        if (event.target === modal || (event.touches[0] && event.touches[0].target === modal)) {
+modals.forEach(modal => {
+    modal.addEventListener("click", (e) => {
+        if (!modal.querySelector(".modal-content").contains(e.target)) {
             modal.classList.remove("active");
         }
     });
@@ -37,6 +36,7 @@ function onWindowResize() {
 
 const confettiCanvas = document.querySelector('.confetti-canvas');
 const jsConfetti = new JSConfetti({canvas: confettiCanvas})
+
 function confetti() {
     jsConfetti.addConfetti({
         emojis: ['💘', '💝', '💓', '💖', '💕', '💗', '❤'],
@@ -188,6 +188,7 @@ async function drawHeart(x, y, angle, size) {
 }
 
 const hearts = [];
+
 async function drawing() {
     while (true) {
         if (drawHearts) {
