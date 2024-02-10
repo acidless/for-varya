@@ -1,15 +1,28 @@
-const MIN_SIZE = 50;
-const MAX_SIZE = 200;
-const START_TIME = 63.5;
+/* Meet Window */
 const MEET_DATE = new Date(2023, 5, 11, 16, 37);
 
 let diffInTime = Date.now() - MEET_DATE.getTime();
 let diffInDays = Math.floor(diffInTime / (1000 * 3600 * 24));
 document.querySelector(".meet-days").textContent = diffInDays;
+const smallText = document.querySelector(".meet-modal__small-text");
+smallText.style.fontSize = `${11 + (diffInDays.toString().length - 1) * 3}px`;
 
-let isPlaying = false;
-let started = false;
-let drawHearts = false;
+const modals = document.querySelectorAll(".modal");
+document.querySelectorAll(".modal-btn").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+        document.getElementById(btn.getAttribute("data-modal")).classList.add("active");
+    })
+})
+
+window.addEventListener("click", (event) => {
+    modals.forEach(modal => {
+        if (event.target === modal || (event.touches[0] && event.touches[0].target === modal)) {
+            modal.classList.remove("active");
+        }
+    });
+})
+
+/* Confetti */
 
 window.addEventListener("resize", onWindowResize);
 onWindowResize();
@@ -23,6 +36,14 @@ function onWindowResize() {
 
 const confettiCanvas = document.querySelector('.confetti-canvas');
 const jsConfetti = new JSConfetti({canvas: confettiCanvas})
+function confetti() {
+    jsConfetti.addConfetti({
+        emojis: ['💘', '💝', '💓', '💖', '💕', '💗', '❤'],
+    });
+    jsConfetti.addConfetti({confettiNumber: 1000});
+}
+
+/* Events */
 
 let played = [];
 const audio = new Audio("./assets/audio.mp3");
@@ -35,6 +56,50 @@ setInterval(() => {
     }
 });
 
+const timings = {
+    635: [() => drawText("Ты самая красивая 💘")],
+    655: [() => drawText("Ты самая желанная")],
+    680: [() => drawText("Ты самая любимая")],
+    705: [() => drawText("Ты солнце прекрасное ✨")],
+    717: [() => {
+        confetti();
+        document.querySelector(".text-container div").classList.add("increase-animation");
+    }, true],
+    730: [() => drawText("Ты самая красивая")],
+    750: [() => drawText("Ты самая желанная")],
+    775: [() => drawText("Ты самая любимая")],
+    795: [() => drawText("Ты счастье долгожданное")],
+    820: [() => drawText("Ты самая красивая")],
+    840: [() => drawText("Ты самая желанная")],
+    865: [() => drawText("Ты самая любимая")],
+    885: [() => drawText("Ты солнце прекрасное ✨")],
+    910: [() => drawText("Улыбайся почаще")],
+    930: [() => drawText("Будто солнце наше")],
+    955: [() => drawText("А ты с каждым разом краше")],
+    975: [() => drawText("И ты та, кто ночь уложит")],
+    1000: [() => drawText("Ты самая прекрасная ✨")],
+    1025: [() => drawText("Сегодня солнце ясное, и ты")],
+    1065: [() => drawText("Та, кем всегда хотела быть")],
+    1090: [() => drawText("Запомни")],
+    1105: [() => drawText("Ты самая красивая")],
+    1120: [() => drawText("Ты самая желанная")],
+    1140: [() => drawText("Ты самая любимая")],
+    1165: [() => drawText("Ты счастье долгожданное")],
+    1190: [() => drawText("Ты самая красивая")],
+    1210: [() => drawText("Ты самая желанная")],
+    1235: [() => drawText("Ты самая любимая")],
+    1255: [() => drawText("Ты солнце прекрасное ✨")],
+    1270: [() => {
+        confetti();
+        document.querySelector(".text-container div").classList.add("increase-animation");
+    }, true],
+}
+
+/* Player */
+
+let isPlaying = false;
+let started = false;
+let drawHearts = false;
 
 const btn = document.querySelector(".player__toggle");
 btn.style.opacity = 1;
@@ -62,18 +127,43 @@ btn.addEventListener("click", (e) => {
 
     isPlaying = !isPlaying;
 });
+
 audio.addEventListener("ended", (e) => {
     btn.querySelector("img").src = "./assets/play.svg";
     isPlaying = false;
     drawHearts = false;
 })
 
+async function onStart() {
+    played = [];
+    try {
+        await turtle.clear();
+    } catch (e) {
+
+    }
+
+    audio.volume = 0.25;
+    audio.currentTime = START_TIME;
+    await audio.play();
+
+    const player = document.querySelector(".player");
+    player.classList.add("bottom");
+
+    drawHearts = true;
+    drawing();
+}
+
+/* Drawing */
+
+const MIN_SIZE = 50;
+const MAX_SIZE = 200;
+const START_TIME = 63.5;
+
+const canvas = document.querySelector("#real-turtle");
+turtle.options.async = true;
+turtle.setSize(0);
 
 const colors = ["#FF0000", "#FF69B4", "#FF1493", "#FF00FF", "#DA70D6"];
-
-function map(val, prevMin, prevMax, newMin, newMax) {
-    return newMin + ((newMax - newMin) / (prevMax - prevMin)) * (val - prevMin);
-}
 
 async function drawHeart(x, y, angle, size) {
     const color = colors[randomNumber(0, colors.length)];
@@ -96,36 +186,7 @@ async function drawHeart(x, y, angle, size) {
     await turtle.closePath();
 }
 
-function randomNumber(min, max) {
-    return Math.floor(Math.random() * (max - min) + min);
-}
-
-
-const canvas = document.querySelector("#real-turtle");
-turtle.options.async = true;
-turtle.setSize(0);
-
-async function onStart() {
-    played = [];
-    try {
-        await turtle.clear();
-    } catch (e) {
-
-    }
-
-    audio.volume = 0.25;
-    audio.currentTime = START_TIME;
-    await audio.play();
-
-    const player = document.querySelector(".player");
-    player.classList.add("bottom");
-
-    drawHearts = true;
-    drawing();
-}
-
 const hearts = [];
-
 async function drawing() {
     while (true) {
         if (drawHearts) {
@@ -167,56 +228,6 @@ async function drawing() {
     }
 }
 
-function wait(ms) {
-    return new Promise((res) => setTimeout(() => res(), ms));
-}
-
-function confetti() {
-    jsConfetti.addConfetti({
-        emojis: ['💘', '💝', '💓', '💖', '💕', '💗', '❤'],
-    });
-    jsConfetti.addConfetti({confettiNumber: 1000});
-}
-
-const timings = {
-    635: [() => drawText("Ты самая красивая 💘")],
-    655: [() => drawText("Ты самая желанная")],
-    680: [() => drawText("Ты самая любимая")],
-    705: [() => drawText("Ты солнце прекрасное ✨")],
-    717: [() => {
-        confetti();
-        document.querySelector(".text-container div").classList.add("increase-animation");
-    }, true],
-    730: [() => drawText("Ты самая красивая")],
-    750: [() => drawText("Ты самая желанная")],
-    775: [() => drawText("Ты самая любимая")],
-    795: [() => drawText("Ты счастье долгожданное")],
-    820: [() => drawText("Ты самая красивая")],
-    840: [() => drawText("Ты самая желанная")],
-    865: [() => drawText("Ты самая любимая")],
-    885: [() => drawText("Ты солнце прекрасное ✨")],
-    910: [() => drawText("Улыбайся почаще")],
-    930: [() => drawText("Будто солнце наше")],
-    955: [() => drawText("А ты с каждым разом краше")],
-    975: [() => drawText("И ты та, кто ночь уложит")],
-    1000: [() => drawText("Ты самая прекрасная ✨")],
-    1025: [() => drawText("Сегодня солнце ясное, и ты")],
-    1065: [() => drawText("Та, кем всегда хотела быть")],
-    1090: [() => drawText("Запомни")],
-    1105: [() => drawText("Ты самая красивая")],
-    1120: [() => drawText("Ты самая желанная")],
-    1140: [() => drawText("Ты самая любимая")],
-    1165: [() => drawText("Ты счастье долгожданное")],
-    1190: [() => drawText("Ты самая красивая")],
-    1210: [() => drawText("Ты самая желанная")],
-    1235: [() => drawText("Ты самая любимая")],
-    1255: [() => drawText("Ты солнце прекрасное ✨")],
-    1270: [() => {
-        confetti();
-        document.querySelector(".text-container div").classList.add("increase-animation");
-    }, true],
-}
-
 function drawText(text) {
     const container = document.querySelector(".text-container");
     const textNodeWrapper = container.querySelector("div");
@@ -234,20 +245,17 @@ function drawText(text) {
     container.appendChild(nodeParent);
 }
 
-var modals = document.querySelectorAll(".modal");
-document.querySelectorAll(".modal-btn").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-        document.getElementById(btn.getAttribute("data-modal")).classList.add("active");
-    })
-})
+/* Utils */
 
-window.addEventListener("click", (event) => {
-    modals.forEach(modal => {
-        if (event.target == modal) {
-            modal.classList.remove("active");
-        }
-    });
-})
+function randomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min) + min);
+}
 
+function wait(ms) {
+    return new Promise((res) => setTimeout(() => res(), ms));
+}
 
+function map(val, prevMin, prevMax, newMin, newMax) {
+    return newMin + ((newMax - newMin) / (prevMax - prevMin)) * (val - prevMin);
+}
 
