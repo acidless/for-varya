@@ -15,6 +15,7 @@ document.querySelectorAll(".modal-btn").forEach((btn) => {
 })
 
 window.addEventListener("click", (event) => {
+    event.stopPropagation();
     modals.forEach(modal => {
         if (event.target === modal || (event.touches[0] && event.touches[0].target === modal)) {
             modal.classList.remove("active");
