@@ -3,7 +3,7 @@ const MEET_DATE = new Date(2023, 5, 11, 16, 37);
 
 let diffInTime = Date.now() - MEET_DATE.getTime();
 let diffInDays = Math.floor(diffInTime / (1000 * 3600 * 24));
-document.querySelector(".meet-days").textContent = diffInDays;
+document.querySelector(".meet-days").innerHTML = diffInDays + '<span class="meet-days__star">*</span>';
 const smallText = document.querySelector(".meet-modal__small-text");
 smallText.style.fontSize = `${11 + (diffInDays.toString().length - 1) * 3}px`;
 
