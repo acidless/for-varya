@@ -278,12 +278,26 @@ button {
 }
 
 .meet-days {
-    font-weight: 700;
     font-size: 48px;
     position: relative;
 }
 
-.meet-days::after {
+.meet-days strong{
+    font-weight: 700;
+}
+
+.meet-days::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #FF69B4;
+    height: 4px;
+    border-radius: 8px;
+}
+
+.meet-days strong::after {
     content: "*";
     position: absolute;
     top: 4px;
@@ -297,17 +311,6 @@ button {
 .remark {
     font-size: 12px !important;
     color: #585858;
-}
-
-.meet-days::before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: #FF69B4;
-    height: 4px;
-    border-radius: 8px;
 }
 
 .meet-modal .meet-modal__text, .meet-modal .meet-modal__small-text, .meet-modal .meet-modal__day {
