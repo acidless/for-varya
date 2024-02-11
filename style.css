@@ -283,7 +283,7 @@ button {
     position: relative;
 }
 
-.meet-days::before {
+.meet-days::after {
     position: absolute;
     content: "";
     bottom: 0;
@@ -294,9 +294,14 @@ button {
     border-radius: 8px;
 }
 
-.meet-days::after {
+.meet-days-wrapper{
+    display: inline-block;
+    position: relative;
+}
+
+.meet-days__star {
+    font-weight: 700;
     position: absolute;
-    content: "*";
     top: 4px;
     left: 100%;
     color: #585858;
