@@ -320,7 +320,7 @@ button {
 .meet-modal .meet-modal__day {
     position: relative;
     bottom: -8px;
-    left: 8px;
+    left: 0;
 }
 
 .meet-modal .meet-modal__text {
